@@ -1,0 +1,31 @@
+@startuml
+
+
+
+
+class:
+	name: TEST1
+	attribute: subject1
+	attribute: +subject2/int/
+	attribute: ~subject3/Object/
+	method: calling_subject(int, String)
+
+class:
+	name: TEST2
+	attribute: subject11/String/
+	attribute: -subject22//Object
+	attribute: #subject33/float/
+	method: calling_tests(float)
+	method: calling_everyone(Object)
+
+interface:
+	name: IN_TEST	
+	method: pleasing_TEST1(Object, int)
+	method: pleasing_TEST2(Object, String)
+
+relations:
+	TEST1 -- TEST2 (has,1,*)
+	TEST1 o- IN_TEST (providing)
+	TEST2 ^- IN_TEST (rates,0,1)
+
+@enduml
