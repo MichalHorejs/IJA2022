@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainApplication extends Application {
@@ -17,6 +19,8 @@ public class MainApplication extends Application {
         stage.getIcons().add(new Image("file:src/main/resources/pictures/uml-icon.png"));
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public static void main(String[] args) {
