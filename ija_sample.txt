@@ -5,23 +5,26 @@
 
 class:
 	name: TEST1
-	attribute: subject1
-	attribute: +subject2/int/
-	attribute: ~subject3/Object/
+	attribute: - bool subject1
+	attribute: + int subject2
+	attribute: ~ Object subject3
 	method: calling_subject(int, String)
+endclass
 
 class:
 	name: TEST2
-	attribute: subject11/String/
-	attribute: -subject22//Object
-	attribute: #subject33/float/
+	attribute: + String subject11
+	attribute: - Object subject22
+	attribute: # float subject33
 	method: calling_tests(float)
 	method: calling_everyone(Object)
+endclass
 
 interface:
 	name: IN_TEST	
 	method: pleasing_TEST1(Object, int)
 	method: pleasing_TEST2(Object, String)
+endinterface
 
 relations:
 	TEST1 -- TEST2 (has,1,*)
