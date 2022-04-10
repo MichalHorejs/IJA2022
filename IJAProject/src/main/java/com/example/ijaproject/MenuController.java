@@ -21,7 +21,7 @@ public class MenuController {
     void openFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select file");
-        
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
     }
 
 }
