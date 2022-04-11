@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -45,8 +46,8 @@ public class MenuController {
                 umlClass = new UMLClass();
                 umlClass.setType("class");
                 String[] parts = line.split(":");
-                String[] miniParts = parts[1].split(" ", 2);
-                umlClass.setAxis(miniParts[1], miniParts[2]);
+                String[] miniParts = parts[1].split(":");
+                umlClass.setAxis(parts[1].substring(1), parts[2].substring(0, parts[2].length() - 1));
                 continue;
             }
 
@@ -84,9 +85,16 @@ public class MenuController {
 
         scanner.close();
 
-        //drawClassDiagram(classDiagram);
-        System.out.println(classDiagram);
+        drawClassDiagram(classDiagram);
 
+
+    }
+
+    public void drawClassDiagram(ClassDiagram classDiagram){
+
+        ArrayList cd = classDiagram.getClassDiagram();
+
+        System.out.println(cd);
     }
 
 

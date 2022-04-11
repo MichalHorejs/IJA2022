@@ -10,6 +10,10 @@ public class ClassDiagram {
         classDiagram.add(obj);
     }
 
+    public ArrayList getClassDiagram() {
+        return classDiagram;
+    }
+
     @Override
     public String toString() {
 
@@ -18,4 +22,6 @@ public class ClassDiagram {
         }
         return "";
     }
+
+
 }
