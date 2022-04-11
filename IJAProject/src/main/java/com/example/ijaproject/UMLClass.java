@@ -8,6 +8,8 @@ public class UMLClass {
     private ArrayList methodList = new ArrayList<>();
     private String name;
     private String type; // interface/class
+    private double height;
+    private double width;
 
     public void addAttribute(UMLAttribute attr){
         attributeList.add(attr);
@@ -55,5 +57,12 @@ public class UMLClass {
             System.out.println(umlM);
         }
         return "";
+    }
+
+    public void setAxis(String X, String Y) {
+        double x = Double.parseDouble(X);
+        double y = Double.parseDouble(Y);
+        height = x;
+        width = y;
     }
 }
