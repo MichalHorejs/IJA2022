@@ -41,7 +41,7 @@
    <center>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
-            <Canvas height="1080.0" width="1920.0" />
+            <Canvas fx:id="canvas" height="1080.0" width="1920.0" />
          </content>
       </ScrollPane>
    </center>
