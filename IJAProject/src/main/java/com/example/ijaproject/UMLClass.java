@@ -10,6 +10,8 @@ public class UMLClass {
     private String type; // interface/class
     private double height;
     private double width;
+    private double centerX;
+    private double centerY;
 
     public void addAttribute(UMLAttribute attr){
         attributeList.add(attr);
@@ -43,9 +45,36 @@ public class UMLClass {
         return type;
     }
 
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getCenterX() {
+        return centerX;
+    }
+
+    public double getCenterY() {
+        return centerY;
+    }
+
+    public void setAxis(String X, String Y, String centerX, String centerY) {
+        double x = Double.parseDouble(X);
+        double y = Double.parseDouble(Y);
+        this.centerX = Double.parseDouble(centerX);
+        this.centerY = Double.parseDouble(centerY);
+        height = y;
+        width = x;
+    }
+
     @Override
     public String toString() {
-        System.out.println("Name: " + name + "  Type: " + type);
+        System.out.println("Name: " + name + "  Type: " + type +
+                "  Width: " + width + " Height: " + height +
+                "   CenterX: " + centerX + " CenterY: " + centerY);
         System.out.println("Attributes:");
 
         for (Object umlA : attributeList){
@@ -59,10 +88,4 @@ public class UMLClass {
         return "";
     }
 
-    public void setAxis(String X, String Y) {
-        double x = Double.parseDouble(X);
-        double y = Double.parseDouble(Y);
-        height = x;
-        width = y;
-    }
 }

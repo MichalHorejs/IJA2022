@@ -2,7 +2,10 @@ package com.example.ijaproject;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuItem;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -16,6 +19,9 @@ public class MenuController {
 
     @FXML
     private MenuItem menuFileExit;
+
+    @FXML
+    private Canvas canvas;
 
     @FXML
     void exitProgram(ActionEvent event) {
@@ -46,14 +52,15 @@ public class MenuController {
                 umlClass = new UMLClass();
                 umlClass.setType("class");
                 String[] parts = line.split(":");
-                String[] miniParts = parts[1].split(":");
-                umlClass.setAxis(parts[1].substring(1), parts[2].substring(0, parts[2].length() - 1));
+                umlClass.setAxis(parts[1].substring(1), parts[2], parts[3], parts[4].substring(0, parts[4].length() - 1));
                 continue;
             }
 
             if (line.contains("interface:")){
                 umlClass = new UMLClass();
                 umlClass.setType("interface");
+                String[] parts = line.split(":");
+                umlClass.setAxis(parts[1].substring(1), parts[2], parts[3], parts[4].substring(0, parts[4].length() - 1));
                 continue;
             }
 
@@ -84,17 +91,36 @@ public class MenuController {
         }
 
         scanner.close();
-
         drawClassDiagram(classDiagram);
-
-
     }
 
     public void drawClassDiagram(ClassDiagram classDiagram){
 
         ArrayList cd = classDiagram.getClassDiagram();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        System.out.println(cd);
+//        UMLClass tmp = (UMLClass) cd.get(0);
+//        System.out.println(classDiagram);
+
+        for(int i = 0; i < cd.size(); i++){
+
+            UMLClass tmp = (UMLClass) cd.get(i);
+            double startX = tmp.getCenterX() - (tmp.getWidth() / 2);
+            double startY = tmp.getCenterY() - (tmp.getHeight() / 2);
+            double width = tmp.getWidth();
+            double height = tmp.getHeight();
+
+            gc.setStroke(Color.BLACK);
+            gc.setLineWidth(2);
+            gc.setLineDashes(0);
+
+            gc.strokeLine(startX, startY, startX, startY + height);
+            gc.strokeLine(startX, startY + height, startX + width, startY + height);
+            gc.strokeLine(startX + width, startY + height, startX + width, startY);
+            gc.strokeLine(startX + width, startY, startX, startY);
+
+        }
+
     }
 
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ClassDiagram {
 
-    ArrayList classDiagram = new ArrayList<>();
+    ArrayList classDiagram = new ArrayList<UMLClass>();
 
     public void addClass(UMLClass obj){
         classDiagram.add(obj);
