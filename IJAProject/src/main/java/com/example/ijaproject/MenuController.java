@@ -44,6 +44,9 @@ public class MenuController {
             if (line.contains("class:")){
                 umlClass = new UMLClass();
                 umlClass.setType("class");
+                String[] parts = line.split(":");
+                String[] miniParts = parts[1].split(" ", 2);
+                umlClass.setAxis(miniParts[1], miniParts[2]);
                 continue;
             }
 
