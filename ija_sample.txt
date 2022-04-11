@@ -2,16 +2,16 @@
 
 
 
-
-class:(25:25)
-	name: TEST
+//width:height:centerX:centerY
+class:(100:150:60:100)
+	name: TEST1
 	attribute: - bool subject1
 	attribute: + int subject2
 	attribute: ~ Object subject3
 	method: calling_subject(int, String)
 endclass
 
-class:(50:25)
+class:(100:150:200:150)
 	name: TEST2
 	attribute: + String subject11
 	attribute: - Object subject22
@@ -20,7 +20,7 @@ class:(50:25)
 	method: calling_everyone(Object)
 endclass
 
-interface:(25:50)
+interface:(100:150:150:350)
 	name: IN_TEST	
 	method: pleasing_TEST1(Object, int)
 	method: pleasing_TEST2(Object, String)
