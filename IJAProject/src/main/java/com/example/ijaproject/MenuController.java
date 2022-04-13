@@ -4,8 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -15,6 +21,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * @author petr_santler, michal_horejs
+ * Controls all the interaction within an application
+ * */
 public class MenuController {
 
     @FXML
@@ -22,13 +32,20 @@ public class MenuController {
 
     @FXML
     private Canvas canvas;
+    private TextField titleTextField;
 
+    /**
+     * Exitting program (Application)
+     */
     @FXML
     void exitProgram(ActionEvent event) {
         System.exit(0);
 
     }
 
+    /**
+     * solves opening file, reading all the lines, storing respective values into their classes etc.
+     */
     @FXML
     void openFile(ActionEvent event) throws FileNotFoundException {
 
@@ -94,6 +111,10 @@ public class MenuController {
         drawClassDiagram(classDiagram);
     }
 
+    /**
+     * drawing frame of class, for now without any further functions
+     * @param classDiagram whole class diagram containing all the classes inside
+     */
     public void drawClassDiagram(ClassDiagram classDiagram){
 
         ArrayList cd = classDiagram.getClassDiagram();
@@ -118,6 +139,7 @@ public class MenuController {
             gc.strokeLine(startX, startY + height, startX + width, startY + height);
             gc.strokeLine(startX + width, startY + height, startX + width, startY);
             gc.strokeLine(startX + width, startY, startX, startY);
+
 
         }
 

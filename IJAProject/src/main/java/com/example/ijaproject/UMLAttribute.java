@@ -1,11 +1,22 @@
 package com.example.ijaproject;
 
+
+/**
+ * @author petr_santler, michal_horejs
+ * defining attribute class and its components
+ * */
 public class UMLAttribute {
 
     private String modifier;
     private String dataType;
     private  String attrName;
 
+    /**
+     *
+     * @param modifier modifiers of attributes, value can be of +, -, #, ~
+     * @param dataType data types given to attribute
+     * @param attrName name given to attribute
+     */
     public UMLAttribute(String modifier, String dataType, String attrName) {
         this.modifier = modifier.replaceAll("\\s+","");
         this.dataType = dataType.replaceAll("\\s+","");

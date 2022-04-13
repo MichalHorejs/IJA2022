@@ -2,8 +2,21 @@ package com.example.ijaproject;
 
 import java.util.ArrayList;
 
+/**
+ * @author petr_santler, michal_horejs
+ * Represents basic class of class diagram
+ * */
 public class UMLClass {
-
+    /**
+     * @param attributeList contains all attributes of class
+     * @param methodList contains all methods of class
+     * @param name contains name of class
+     * @param type contains type of class, could be normal class or interface
+     * @param height contains height of class
+     * @param width contains width of class
+     * @param centerX the x coordinate in the center of the object to draw
+     * @param centerY the y coordinate in the center of the object to draw
+     */
     private ArrayList attributeList = new ArrayList<>();
     private ArrayList methodList = new ArrayList<>();
     private String name;
@@ -61,6 +74,9 @@ public class UMLClass {
         return centerY;
     }
 
+    /**
+     * Sets initial values for height, width, centerX, centerY
+     */
     public void setAxis(String X, String Y, String centerX, String centerY) {
         double x = Double.parseDouble(X);
         double y = Double.parseDouble(Y);
