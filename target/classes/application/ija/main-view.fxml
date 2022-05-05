@@ -41,7 +41,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <AnchorPane fx:id="rightPane" />
+            <AnchorPane fx:id="rightPane" onDragDropped="#dragDropped" onDragOver="#dragOver" />
          </items>
       </SplitPane>
    </children>

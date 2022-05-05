@@ -7,7 +7,7 @@
 
 <VBox fx:id="classPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="200.0" stylesheets="@css/class.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ija.DiagramClassController">
    <children>
-      <Label fx:id="className" minHeight="-Infinity" onMouseClicked="#changeClassName" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" prefHeight="40.0" prefWidth="196.0" text="Class name" />
+      <Label fx:id="className" minHeight="-Infinity" onDragDetected="#dragDetected" onMouseClicked="#changeClassName" prefHeight="40.0" prefWidth="196.0" text="Class name" />
       <TextArea fx:id="classVariables" minWidth="-Infinity" prefHeight="105.0" prefWidth="196.0" />
       <TextArea fx:id="classVariables1" minWidth="-Infinity" prefHeight="105.0" prefWidth="196.0" />
    </children>

@@ -3,8 +3,13 @@ package application.ija;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -45,5 +50,30 @@ public class MainController {
         }
 
     }
+
+    /**
+     * Moving UML class across pane
+     * @param event
+     */
+    @FXML
+    void dragOver(DragEvent event) {
+
+        VBox vBox = (VBox) event.getGestureSource();
+        vBox.relocate(event.getSceneX() - 208, event.getSceneY() - 26);
+        event.consume();
+    }
+
+    /**
+     * Final drop of UML class in pane and saving new coords
+     * @param event
+     */
+    @FXML
+    void dragDropped(DragEvent event) {
+        // maybe some future code for saving new coords of UML class
+        event.setDropCompleted(true);
+        event.consume();
+    }
+
+
 
 }

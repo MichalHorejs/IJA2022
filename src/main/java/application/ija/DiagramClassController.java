@@ -1,9 +1,11 @@
 package application.ija;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -26,6 +28,10 @@ public class DiagramClassController {
     @FXML
     private TextArea classVariables;
 
+    @FXML
+    private void initialize(){
+
+    }
     /**
      * Changes name of class
      * @param event
@@ -35,20 +41,22 @@ public class DiagramClassController {
         className.setText("Ahoj");
     }
 
-    @FXML
-    void mousePressed(MouseEvent event) {
-        // for smth in future maybe
-    }
-
-
     /**
-     * Relocate dragged UML class to position on mouse cursor
+     * Detection of UML class drag
      * @param event
      */
     @FXML
-    void mouseReleased(MouseEvent event) {
-        classPane.relocate(event.getSceneX() - 208, event.getSceneY() - 26);
+    void dragDetected(MouseEvent event) {
+
+        Dragboard db = classPane.startDragAndDrop(TransferMode.MOVE);
+        ClipboardContent content = new ClipboardContent();
+        content.putString("UML class");
+
+        db.setContent(content);
+        event.consume();
+
     }
+
 
 
 
