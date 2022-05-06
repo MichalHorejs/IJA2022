@@ -73,4 +73,12 @@ public class UMLClass {
                 ", yCoord=" + yCoord +
                 '}' + "\n\n";
     }
+
+    public void resetAttributes(String attributes){
+        this.attributes = attributes;
+    }
+
+    public void resetMethods(String methods){
+        this.methods = methods;
+    }
 }

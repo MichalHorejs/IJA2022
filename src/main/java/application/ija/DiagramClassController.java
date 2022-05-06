@@ -13,9 +13,6 @@ import javafx.scene.layout.VBox;
  */
 public class DiagramClassController {
 
-    private double xCordPressed;
-    private double yCordPressed;
-
     @FXML
     private TextArea classFunctions;
 
@@ -28,17 +25,19 @@ public class DiagramClassController {
     @FXML
     private TextArea classVariables;
 
-    @FXML
-    private void initialize(){
-
-    }
     /**
      * Changes name of class
      * @param event
      */
     @FXML
     void changeClassName(MouseEvent event) {
-        className.setText("Ahoj");
+        if (event.getButton() == MouseButton.SECONDARY){
+            AnchorPane parent = (AnchorPane) classPane.getParent();
+            parent.getChildren().remove(classPane);
+
+        }else{
+            className.setText("Ahoj");
+        }
     }
 
     /**

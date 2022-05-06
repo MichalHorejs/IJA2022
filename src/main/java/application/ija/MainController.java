@@ -4,12 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -58,12 +56,24 @@ public class MainController {
     void createClass(ActionEvent event) {
         try{
             VBox newClass = FXMLLoader.load(getClass().getResource("diagram-class.fxml"));
+            UMLClass umlClass = new UMLClass();
 
             if(event.getSource() == classButton){
                 newClass.getStylesheets().add(getClass().getResource("css/class.css").toExternalForm());
+                umlClass.setType("class");
             }else{
                 newClass.getStylesheets().add(getClass().getResource("css/interface.css").toExternalForm());
+                umlClass.setType("interface");
             }
+
+            Label name = (Label) newClass.getChildren().get(0);
+            umlClass.setName(name.getText());
+
+            umlClass.setAttributes("");
+            umlClass.setMethods("");
+
+            classDiagram.addUMLClass(umlClass);
+
             rightPane.getChildren().add(newClass);
 
         } catch (IOException e){
@@ -72,6 +82,8 @@ public class MainController {
 
     }
 
+
+    /******************************* Drag events *******************************/
     /**
      * Moving UML class across pane
      * @param event
@@ -95,6 +107,7 @@ public class MainController {
         event.consume();
     }
 
+    /******************************* File events *******************************/
     @FXML
     void saveToFile(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -103,6 +116,23 @@ public class MainController {
 
         ArrayList classList = classDiagram.getClassDiagram();
         selectedFile.setWritable(true);
+
+        int smth = 0;
+        for(Node tmp : rightPane.getChildren()){
+            UMLClass tmpClass = (UMLClass) classList.get(smth);
+            VBox box = (VBox) tmp;
+
+            Label name = (Label) box.getChildren().get(0);
+            tmpClass.setName(name.getText());
+
+            TextArea variables = (TextArea) box.getChildren().get(1);
+            tmpClass.resetAttributes(variables.getText());
+
+            TextArea methods = (TextArea) box.getChildren().get(2);
+            tmpClass.resetMethods(methods.getText());
+
+            smth += 1;
+        }
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile));
         writer.write("@startuml\n\n");
