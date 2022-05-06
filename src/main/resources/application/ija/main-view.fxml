@@ -34,8 +34,8 @@
          <items>
             <VBox fx:id="leftPane" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createClass" prefWidth="160.0" text="Create Class" />
-                  <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="160.0" text="Create Interface" />
+                  <Button fx:id="classButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createClass" prefWidth="160.0" text="Create Class" />
+                  <Button fx:id="interfaceButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createClass" prefWidth="160.0" text="Create Interface" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

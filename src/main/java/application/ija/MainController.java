@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
@@ -35,6 +36,12 @@ public class MainController {
     @FXML
     private SplitPane splitPane;
 
+    @FXML
+    private Button classButton;
+
+    @FXML
+    private Button interfaceButton;
+
     /**
      * Creates new UML representation of class
      * @param event
@@ -43,6 +50,11 @@ public class MainController {
     void createClass(ActionEvent event) {
         try{
             VBox newClass = FXMLLoader.load(getClass().getResource("diagram-class.fxml"));
+            if(event.getSource() == classButton){
+                newClass.getStylesheets().add(getClass().getResource("css/class.css").toExternalForm());
+            }else{
+                newClass.getStylesheets().add(getClass().getResource("css/interface.css").toExternalForm());
+            }
             rightPane.getChildren().add(newClass);
 
         } catch (IOException e){

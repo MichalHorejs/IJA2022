@@ -1,0 +1,15 @@
+.text-area{
+    -fx-background-color: red;
+}
+
+.label{
+    -fx-background-color: red;
+}
+
+#classPane{
+    -fx-background-color: red;
+}
+
+#classPane:hover{
+    -fx-background-color: lightblue;
+}
