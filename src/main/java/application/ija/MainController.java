@@ -16,10 +16,10 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -93,6 +93,54 @@ public class MainController {
         // maybe some future code for saving new coords of UML class
         event.setDropCompleted(true);
         event.consume();
+    }
+
+    @FXML
+    void saveToFile(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save to");
+        File selectedFile = fileChooser.showSaveDialog(new Stage());
+
+        ArrayList classList = classDiagram.getClassDiagram();
+        selectedFile.setWritable(true);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile));
+        writer.write("@startuml\n\n");
+
+        for (int i = 0; i < classList.size(); i++){
+            UMLClass tmpClass = (UMLClass) classList.get(i);
+
+            writer.write(tmpClass.getType() + ":(x:y:" + tmpClass.getxCoord() + ":" + tmpClass.getyCoord() + ")\n");
+            writer.write("  name: " + tmpClass.getName() + "\n");
+
+            String attr = tmpClass.getAttributes();
+            String[] parts = attr.split("\n");
+
+            // processes attributes string into right format
+            if (!parts[0].equals("")){
+                for(int j = 0; j < parts.length; j++){
+                    writer.write("  attribute: " + parts[j] + "\n");
+                }
+            }
+
+            // processes methods string into right format
+            String meth = tmpClass.getMethods();
+            String[] parts2 = meth.split("\n");
+
+            if (!parts2[0].equals("")){
+                for(int j = 0; j < parts2.length; j++){
+                    writer.write("  method: " + parts2[j] + "\n");
+                }
+            }
+
+            writer.write("end" + tmpClass.getType() + "\n\n");
+
+        }
+
+        writer.write("@enduml");
+
+        writer.close();
+
     }
 
     @FXML
