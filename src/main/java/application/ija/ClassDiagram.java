@@ -1,17 +1,28 @@
 package application.ija;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ClassDiagram {
 
-    private List classList;
+    private ArrayList classDiagram;
 
     public ClassDiagram() {
-        this.classList = new ArrayList();
+        this.classDiagram = new ArrayList<UMLClass>();
     }
 
     public void addUMLClass(UMLClass newClass){
-        classList.add(newClass);
+        classDiagram.add(newClass);
+    }
+
+    public ArrayList getClassDiagram() {
+        return classDiagram;
+    }
+
+    @Override
+    public String toString() {
+        for (Object tmp : classDiagram){
+            System.out.println(tmp);
+        }
+        return "";
     }
 }

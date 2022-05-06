@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -15,12 +12,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -49,14 +48,17 @@ public class MainController {
     @FXML
     private Button interfaceButton;
 
+    ClassDiagram classDiagram = new ClassDiagram();
+
     /**
-     * Creates new UML representation of class
+     * Creates new UML representation of class/interface
      * @param event
      */
     @FXML
     void createClass(ActionEvent event) {
         try{
             VBox newClass = FXMLLoader.load(getClass().getResource("diagram-class.fxml"));
+
             if(event.getSource() == classButton){
                 newClass.getStylesheets().add(getClass().getResource("css/class.css").toExternalForm());
             }else{
@@ -94,65 +96,95 @@ public class MainController {
     }
 
     @FXML
-    void openFile() throws FileNotFoundException {
+    void openFile() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select file");
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         Scanner scanner = new Scanner(selectedFile);
 
         // čtení UML ze souboru a uložení hodnot do objektů
-        UMLClass newClass = null;
+        UMLClass umlClass = null;
         while (scanner.hasNextLine()) {
 
-                    String line = scanner.nextLine();
-                    if (line.equals("")){
-                        continue;
-                    }
+            String line = scanner.nextLine();
+            if (line.equals("")){
+                continue;
+            }
 
-                    if (line.contains("class:")){
-                        newClass = new UMLClass();
-                        // TODO set axis for class measurements
-            //            String[] parts = line.split(":");
-            //            umlClass.setAxis(parts[1].substring(1), parts[2], parts[3], parts[4].substring(0, parts[4].length() - 1));
-                        continue;
-                    }
+            if (line.contains("class:") || line.contains("interface:")){
+                umlClass = new UMLClass();
 
-                    if (line.contains("interface:")){
+                String[] parts = line.split(":");
+                umlClass.setType(parts[0]);
+                umlClass.setxCoord(Integer.parseInt(parts[3]));
+                umlClass.setyCoord(Integer.parseInt(parts[4].substring(0, parts[4].length() - 1)));
+//                        System.out.println(umlClass);
+//                        umlClass.setAxis(parts[1].substring(1), parts[2], parts[3], parts[4].substring(0, parts[4].length() - 1));
+                continue;
+            }
 
-                        // TODO set axis for interface measurements
-            //            String[] parts = line.split(":");
-            //            umlClass.setAxis(parts[1].substring(1), parts[2], parts[3], parts[4].substring(0, parts[4].length() - 1));
-                        continue;
-                    }
+            if (line.contains("name:")){
+                String[] parts = line.split(":");
+                umlClass.setName(parts[1].substring(1));
+                continue;
+            }
 
-                    if (line.contains("name")){
-                        //String[] parts = line.split(":");
-                        //DiagramClassController newClass = new DiagramClassController();
-                        //newClass.changeClassName(parts[1].replaceAll("\\s+", ""));
-                        continue;
-                    }
+            if(line.contains("method:")){
+                String[] parts = line.split(":");
+                umlClass.setMethods(parts[1].substring(1) + "\n");
 
-                    if(line.contains("method")){
-                        String[] parts = line.split(":");
-                        newClass.setMethods(parts[1]);
-                        continue;
-                    }
+                continue;
+            }
 
-                    if(line.contains("attribute")){
-                        String[] parts = line.split(":");
-                        String[] miniParts = parts[1].split(" ", 3);
-                        continue;
-                    }
+            if(line.contains("attribute:")){
+                String[] parts = line.split(":");
+                umlClass.setAttributes(parts[1].substring(1) + "\n");
 
-                    if(line.contains("endclass") || line.contains("endinterface")){
-                        ClassDiagram classDiagram = new ClassDiagram();
-                        classDiagram.addUMLClass(newClass);
-                        newClass = null;
-                        continue;
-                    }
+                continue;
+            }
 
-                }
-                scanner.close();
+            if(line.contains("endclass") || line.contains("endinterface")){
+                classDiagram.addUMLClass(umlClass);
+                umlClass = null;
+                continue;
+            }
+        }
+
+        scanner.close();
+        drawDiagram();
+
+    }
+
+    /**
+     * Function draws all saved classes and connections to pane
+     * @throws IOException
+     */
+    public void drawDiagram() throws IOException {
+
+        ArrayList classList = classDiagram.getClassDiagram();
+
+        for (int i = 0; i < classList.size(); i++){
+            UMLClass tmpClass = (UMLClass) classList.get(i);
+            VBox newClass = FXMLLoader.load(getClass().getResource("diagram-class.fxml"));
+
+            if(tmpClass.getType().equals("class")){
+                newClass.getStylesheets().add(getClass().getResource("css/class.css").toExternalForm());
+            }else{
+                newClass.getStylesheets().add(getClass().getResource("css/interface.css").toExternalForm());
+            }
+
+            Label name = (Label) newClass.getChildren().get(0);
+            name.setText(tmpClass.getName());
+
+            TextArea variables = (TextArea) newClass.getChildren().get(1);
+            variables.setText(tmpClass.getAttributes());
+
+            TextArea methods = (TextArea) newClass.getChildren().get(2);
+            methods.setText(tmpClass.getMethods());
+
+            newClass.relocate(tmpClass.getxCoord() + 208, tmpClass.getyCoord() + 26);
+            rightPane.getChildren().add(newClass);
+        }
 
     }
 
