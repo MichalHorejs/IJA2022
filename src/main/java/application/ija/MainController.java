@@ -1,14 +1,20 @@
 package application.ija;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -92,6 +98,12 @@ public class MainController {
     void dragOver(DragEvent event) {
 
         VBox vBox = (VBox) event.getGestureSource();
+        Label name = (Label) vBox.getChildren().get(0);
+
+        UMLClass umlClass = classDiagram.getClass(name.getText());
+        umlClass.setxCoord((int) event.getSceneX() - 208);
+        umlClass.setyCoord((int) event.getSceneY() - 26);
+
         vBox.relocate(event.getSceneX() - 208, event.getSceneY() - 26);
         event.consume();
     }
@@ -260,10 +272,11 @@ public class MainController {
             TextArea methods = (TextArea) newClass.getChildren().get(2);
             methods.setText(tmpClass.getMethods());
 
-            newClass.relocate(tmpClass.getxCoord() + 208, tmpClass.getyCoord() + 26);
+            newClass.relocate(tmpClass.getxCoord(), tmpClass.getyCoord());
             rightPane.getChildren().add(newClass);
         }
 
     }
+
 
 }

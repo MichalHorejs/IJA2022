@@ -18,6 +18,17 @@ public class ClassDiagram {
         return classDiagram;
     }
 
+    public UMLClass getClass(String name){
+        for (int i = 0; i < classDiagram.size(); i++){
+            UMLClass tmp = (UMLClass) classDiagram.get(i);
+
+            if (tmp.getName().equals(name)){
+                return tmp;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         for (Object tmp : classDiagram){
